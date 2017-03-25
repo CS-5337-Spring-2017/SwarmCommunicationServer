@@ -9,8 +9,8 @@ module.exports = {
     },
     ROVER_02: {
         id: 02,
-        sensor: enums.science.NONE,
-        tool: enums.tools.BOTH,
+        sensor: enums.science.MINERAL,
+        tool: enums.tools.DRILL,
         drive: enums.drive.WALKER
     },
     ROVER_03: {
