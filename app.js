@@ -32,7 +32,7 @@ app.get('/api/global', function (req, res) {
     // if (!secret || secret !== process.env.GREENCORP_537_APIKEY) {
     //     res.status(401).send('Unauthorized. You must have GreenCorp secret to access global map');
     // } else {
-        console.log("we are here: " + req.header("Location")); //broadcasting ROVER_02's location
+
         res.send(utils.mapToGlobal(map));
     // }
 });
@@ -43,6 +43,7 @@ app.post('/api/global', function (req, res) {
     var rovername = req.header('Rover-Name');
     // var secret = req.header('Corp-Secret');
     var rover = rovers[rovername];
+    console.log("we are here: " + req.header("Location")); //broadcasting ROVER_02's location
     console.log("Posting Global Map: rover " + rover.id);
 
     // if (!secret || (secret !== process.env.GREENCORP_537_APIKEY)) {
