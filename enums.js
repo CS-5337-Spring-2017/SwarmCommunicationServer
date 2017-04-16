@@ -2,6 +2,11 @@
  * Created by samskim on 5/19/16.
  */
 module.exports = {
+    harvested: {
+        OPEN: "OPEN",
+        PENDING: "PENDING",
+        DONE: "DONE"
+    },
     science: {
         ORGANIC: "ORGANIC",
         CRYSTAL: "CRYSTAL",

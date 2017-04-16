@@ -3,7 +3,7 @@
  */
 var enums = require('./enums');
 
-exports.updateGlobalMap = function (map, tiles, rover){
+exports.updateGlobalMap = function (map, tiles, rover, task){
     tiles.forEach(function (tile) {
 
         // validate that data has all attributes and is in correct format
@@ -23,6 +23,10 @@ exports.updateGlobalMap = function (map, tiles, rover){
 
                         // TODO: found : for debugging
                         map[key].f = rover.id;
+                        //add more info for the task to be completed by the rovers
+                        // map[key].status = "open";
+                        // map[]
+
 
                         // else if sender's tile doesn't contain science, it can be two cases:
                         // 1. the science is a type such that can't be detected by sender's sensor - dont overwrite it
@@ -44,6 +48,11 @@ exports.updateGlobalMap = function (map, tiles, rover){
 
                 // TODO: found : for debugging
                 map[key].f = rover.id;
+
+                // map[key].harvested = enums.harvested.OPEN;
+
+                // map[key].harvestedBy = "";
+
             }
 
             // ****** science check logic end

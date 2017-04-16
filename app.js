@@ -21,6 +21,10 @@ var enums = require('./enums');
 
 var map = {}
 
+var locations = {}
+
+var task =[]
+
 // Homepage with instructions
 app.get('/', function (req, res) {
     res.sendFile('index.html');
@@ -33,25 +37,42 @@ app.get('/api/global', function (req, res) {
     //     res.status(401).send('Unauthorized. You must have GreenCorp secret to access global map');
     // } else {
         res.send(utils.mapToGlobal(map));
+        console.log(JSON.stringify(utils.mapToGlobal(map)));
     // }
 });
 
-// post to global map
+// get all rover locations
+app.get('/api/locations', function (req, res) {
+    var rovername = req.header('Rover-Name');
+    // console.log("Sending rover loacations to rover " + rovername + 
+    //     "\n" + JSON.stringify(locations));
+    res.send(JSON.stringify(locations));
+});
+
+// post to global mapy
 app.post('/api/global', function (req, res) {
 
     var rovername = req.header('Rover-Name');
+    var roverCoorX = req.header('Rover-CoordX');
+    var roverCoorY = req.header('Rover-CoordY');
+
+    locations[rovername] = {x: roverCoorX, y: roverCoorY};
+    console.log(JSON.stringify(locations));
     // var secret = req.header('Corp-Secret');
     var rover = rovers[rovername];
-    console.log("Posting Global Map: rover " + rover.id);
+    // console.log("Posting Global Map: rover " + rover.id + " | Coordinate X: " + 
+    //     roverCoorX + " & Coordinate Y: " + roverCoorY);
 
     // if (!secret || (secret !== process.env.GREENCORP_537_APIKEY)) {
     //     res.status(401).send('Unauthorized. You must have GreenCorp secret to post');
     // } else {
 
         var tiles = req.body;
+
+        console.log("\n\n\nGOT:\n" + JSON.stringify(req.body) + "\n\n\n\n")
         // validate that the data is an array
         if (tiles && tiles.constructor === Array) {
-            utils.updateGlobalMap(map, tiles, rover);
+            utils.updateGlobalMap(map, tiles, rover, task);
             res.send('OK');
         } else {
             res.send('Data must be an array');
@@ -87,11 +108,11 @@ app.get('/api/global/size', function (req, res) {
 // for tutorial
 app.get('/api/global/test', function (req, res) {
     var testmap = [
-        {x: 1, y: 2, terrain: enums.terrain.GRAVEL, science: enums.science.CRYSTAL},
-        {x: 3, y: 4, terrain: enums.terrain.SAND, science: enums.science.ORGANIC},
-        {x: 5, y: 6, terrain: enums.terrain.SOIL, science: enums.science.MINERAL},
-        {x: 7, y: 8, terrain: enums.terrain.ROCK, science: enums.science.RADIOACTIVE},
-        {x: 9, y: 10, terrain: enums.terrain.NONE, science: enums.science.NONE}
+    {x: 1, y: 2, terrain: enums.terrain.GRAVEL, science: enums.science.CRYSTAL},
+    {x: 3, y: 4, terrain: enums.terrain.SAND, science: enums.science.ORGANIC},
+    {x: 5, y: 6, terrain: enums.terrain.SOIL, science: enums.science.MINERAL},
+    {x: 7, y: 8, terrain: enums.terrain.ROCK, science: enums.science.RADIOACTIVE},
+    {x: 9, y: 10, terrain: enums.terrain.NONE, science: enums.science.NONE}
     ]
     res.send(testmap);
 });
