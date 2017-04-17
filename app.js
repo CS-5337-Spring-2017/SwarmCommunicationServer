@@ -32,7 +32,6 @@ app.get('/api/global', function (req, res) {
     // if (!secret || secret !== process.env.GREENCORP_537_APIKEY) {
     //     res.status(401).send('Unauthorized. You must have GreenCorp secret to access global map');
     // } else {
-
         res.send(utils.mapToGlobal(map));
     // }
 });
